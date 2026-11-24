@@ -1,59 +1,67 @@
+/** Represents a book managed by the university library. */
 public class Libro {
+  private final String titulo;
+  private final String autor;
+  private boolean disponible = true;
 
-    private String titulo;
-    private String autor;
-    private boolean disponible = true;
+  /** Creates a book with its title and author.
+   *
+   * @param titulo book title
+   *
+   * @param autor book author
+   */
+  public Libro(String titulo, String autor) {
+    this.titulo = titulo;
+    this.autor = autor;
+  }
 
-    // Problema 1: campo privado nunca utilizado.
-    private String codigoInterno = "SIN-CODIGO";
+  /** Returns the title of this book.
+   *
+   * @return the book title
+   */
+  public String getTitulo() {
+    return titulo;
+  }
 
-    public Libro(String titulo, String autor) {
-        this.titulo = titulo;
-        this.autor = autor;
+  /** Returns the author of this book.
+   *
+   * @return the book author
+   */
+  public String getAutor() {
+    return autor;
+  }
+
+  /** Indicates whether this book is available to borrow.
+   *
+   * @return true when the book is available
+   */
+  public boolean estaDisponible() {
+    return disponible;
+  }
+
+  /** Lends this book.
+   *
+   * @throws IllegalStateException when the book is already lent
+   */
+  public void prestar() {
+    if (!disponible) {
+      throw new IllegalStateException("Libro no disponible");
     }
+    disponible = false;
+  }
 
-    public String getTitulo() {
-        return titulo;
-    }
+  /** Marks this book as available again. */
+  public void devolver() {
+    disponible = true;
+  }
 
-    public String getAutor() {
-        return autor;
-    }
-
-    public boolean estaDisponible() {
-        return disponible;
-    }
-
-    public void prestar() {
-        // Problema 2: salida directa por consola.
-        System.out.println("Prestando libro: " + titulo);
-
-        if (!disponible) {
-            throw new IllegalStateException(
-                "Libro no disponible"
-            );
-        }
-
-        disponible = false;
-    }
-
-    public void devolver() {
-        disponible = true;
-
-        // Problema 3: manejo incorrecto de excepción.
-        try {
-            Integer.parseInt("ABC");
-        } catch (NumberFormatException e) {
-            // Bloque vacío intencional.
-        }
-    }
-
-    public boolean esMismoTitulo(String otroTitulo) {
-        // Problema 4: comparación de referencias.
-        return titulo == otroTitulo;
-    }
-
-    // Problema 5: método privado nunca utilizado.
-    private void registrarAuditoriaInterna() {
-    }
+  /** Compares this book title with another title by value.
+   *
+   * @param otroTitulo title to compare
+   *
+   * @return true when both titles are equal, including when both are null
+   */
+  public boolean esMismoTitulo(String otroTitulo) {
+    return java.util.Objects.equals(titulo, otroTitulo);
+  }
 }
